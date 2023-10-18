@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <string>
+#include <stdlib.h> 
+#include <time.h>
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+int main() {
+vector <map<int, int>> frequency; // Хранит количество файлов для каждого символа
+string filename; // Хранит название файла, которое будет формироваться
+
+int totalFiles;
+
+std::cout << "Введите общее количество файлов: ";
+std::cin >> totalFiles;
+
+if (totalFiles <= 0) {
+std::cout << "Недопустимое количество файлов!" << std::endl;
+return 0;
+}
+
+for (int i = 1; i <= totalFiles; ++i) {
+char symbol;
+
+std::cout << "Введите символ для названия файла " << i << ": ";
+std::cin >> symbol;
+
+// Если символ уже встречался ранее, увеличиваем его счетчик
+if (frequency.count(symbol)) {
+frequency[symbol]++;
+} else {
+frequency[symbol] = 1;
+}
+
+filename += symbol; // Добавляем символ к названию файла
+}
+
+// Проверка на использование каждого символа минимум 1 раз
+bool allSymbolsUsed = true;
+for (const auto& pair : frequency) {
+if (pair.second < 1) {
+allSymbolsUsed = false;
+break;
+}
+}
+
+if (!allSymbolsUsed) {
+std::cout << "Некоторые символы не были использованы в названиях файлов!" << std::endl;
+return 0;
+}
+
+std::cout << "Название файла: " << filename << std::endl;
+
+return 0;
+}
